@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'PT Serif', Georgia, serif;
+    color: #2c3e50;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'PT Serif', Georgia, serif;
+  }
+}
+
+:root {
+  --teal-primary: #4195A3;
+  --teal-dark: #327d89;
+  --teal-light: #5aafbd;
+}
