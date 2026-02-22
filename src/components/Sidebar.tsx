@@ -1,8 +1,17 @@
-export default function Sidebar() {
+interface SidebarProps {
+  onNavigateSubmit?: () => void;
+}
+
+export default function Sidebar({ onNavigateSubmit }: SidebarProps) {
   return (
     <aside className="w-80 space-y-8">
       <div>
-        <button className="w-full bg-[#4195A3] hover:bg-[#327d89] text-white font-semibold py-3 px-6 rounded transition-colors">
+        <button
+          type="button"
+          onClick={onNavigateSubmit}
+          disabled={!onNavigateSubmit}
+          className="w-full bg-[#4195A3] hover:bg-[#327d89] text-white font-semibold py-3 px-6 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           MAKE A SUBMISSION
         </button>
       </div>

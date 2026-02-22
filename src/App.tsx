@@ -18,8 +18,9 @@ import Accessibility from './components/policies/Accessibility';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Contact from './components/Contact';
+import SubmitResearch from './components/SubmitResearch';
 
-type Page = 'home' | 'about' | 'browse' | 'submissions' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact';
+type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -49,9 +50,21 @@ function App() {
     },
   ];
 
+  // Render submission form separately (it has its own layout)
+  if (currentPage === 'submit-research') {
+    return (
+      <SubmitResearch
+        onNavigateBack={() => setCurrentPage('submissions')}
+        onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
+        userName="Admin JoC"
+        userInitials="AJ"
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="min-h-screen bg-white border-l border-r border-gray-200 mx-auto" style={{ maxWidth: '1500px' }}>
+      <div className="min-h-screen bg-white border-l border-r border-gray-200 mx-auto w-full" style={{ maxWidth: '1500px', width: '100%' }}>
         <Header
           onNavigateHome={() => setCurrentPage('home')}
           onNavigateRegister={() => setCurrentPage('register')}
@@ -60,7 +73,7 @@ function App() {
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
 
         <div className="flex-1">
-          <div className="container mx-auto px-12 py-8" style={{ maxWidth: '1400px' }}>
+          <div className="mx-auto px-12 py-8" style={{ maxWidth: '1400px' }}>
             <div className="flex gap-12">
               <main className="flex-1">
                 {currentPage === 'home' ? (
@@ -83,7 +96,10 @@ function App() {
                     articles={mockArticles}
                   />
                 ) : currentPage === 'submissions' ? (
-                  <Submissions onNavigateHome={() => setCurrentPage('home')} />
+                  <Submissions
+                    onNavigateHome={() => setCurrentPage('home')}
+                    onNavigateSubmit={() => setCurrentPage('submit-research')}
+                  />
                 ) : currentPage === 'author-guidelines' ? (
                   <AuthorGuidelines onNavigateHome={() => setCurrentPage('home')} />
                 ) : currentPage === 'open-access' ? (
@@ -117,7 +133,7 @@ function App() {
                 ) : null}
               </main>
 
-              <Sidebar />
+              <Sidebar onNavigateSubmit={() => setCurrentPage('submit-research')} />
             </div>
           </div>
         </div>

@@ -2,9 +2,10 @@ import { Home } from 'lucide-react';
 
 interface SubmissionsProps {
   onNavigateHome: () => void;
+  onNavigateSubmit?: () => void;
 }
 
-export default function Submissions({ onNavigateHome }: SubmissionsProps) {
+export default function Submissions({ onNavigateHome, onNavigateSubmit }: SubmissionsProps) {
   return (
     <div>
       <div className="mb-6 flex items-center gap-2 text-sm text-gray-600">
@@ -20,11 +21,19 @@ export default function Submissions({ onNavigateHome }: SubmissionsProps) {
         Submissions
       </h2>
 
-      <div className="bg-blue-50 border-l-4 border-[#4195A3] p-6 mb-8">
+      <div className="bg-blue-50 border-l-4 border-[#4195A3] p-6 mb-8 flex items-center justify-between">
         <p className="text-gray-700">
           <a href="#" className="text-[#4195A3] hover:underline font-medium">Login</a> or{' '}
           <a href="#" className="text-[#4195A3] hover:underline font-medium">Register</a> to make a submission.
         </p>
+        {onNavigateSubmit && (
+          <button
+            onClick={onNavigateSubmit}
+            className="px-6 py-2 bg-[#4195A3] text-white rounded hover:bg-[#327d89] transition-colors font-medium"
+          >
+            Make a Submission
+          </button>
+        )}
       </div>
 
       <div className="space-y-8">

@@ -7,7 +7,7 @@ interface HeaderProps {
 export default function Header({ onNavigateHome, onNavigateRegister, onNavigateLogin }: HeaderProps) {
   return (
     <header className="bg-[#4195A3] text-white">
-      <div className="container mx-auto px-12 py-5 flex justify-between items-center" style={{ maxWidth: '1500px' }}>
+      <div className="mx-auto px-12 py-5 flex justify-between items-center" style={{ maxWidth: '1500px' }}>
         <button onClick={onNavigateHome} className="text-2xl font-bold tracking-wide hover:text-gray-200 transition-colors">
           CROATIAN MEDICAL JOURNAL
         </button>

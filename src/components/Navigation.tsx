@@ -54,7 +54,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
 
   return (
     <nav className="bg-white border-b border-gray-200 relative">
-      <div className="container mx-auto px-12" style={{ maxWidth: '1500px' }}>
+      <div className="mx-auto px-12" style={{ maxWidth: '1500px' }}>
         <ul className="flex gap-6 py-4">
           {menuItems.map((item, index) => (
             <li
