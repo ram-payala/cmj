@@ -20,47 +20,50 @@ export default function CopyrightLicensing({ onNavigateHome }: CopyrightLicensin
         Copyright & Licensing
       </h2>
 
-      <div className="space-y-8">
+      <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
-          <p className="text-gray-700 leading-relaxed">
-            <em>Acta Clinica Croatica</em> is an international, peer-reviewed, open access journal committed to
-            promoting transparency, accessibility, and responsible dissemination of scholarly research. This page
-            sets out the copyright and licensing terms that apply to all content published in the Journal.
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Licensing of Published Content</h3>
+          <p className="mb-4">
+            All articles published in the Journal are made available under an open access license to ensure free and unrestricted access to research worldwide. Unless otherwise indicated on the article itself, Croatian Medical Journal applies the Creative Commons Attribution-NonCommercial (CC BY-NC) License.
+          </p>
+          <p>
+            Under the CC BY-NC license, users are permitted to read, download, copy, distribute, print, and adapt published works for non-commercial purposes, provided that proper credit is given to the original authors and source. Any commercial use of published material requires prior written permission from the Journal.
           </p>
         </section>
 
         <section>
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
-            Copyright Ownership
-          </h3>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Unless otherwise agreed in writing, copyright in articles published in <em>Acta Clinica Croatica</em>{' '}
-            is transferred to the Journal upon acceptance. This transfer enables the Journal to publish,
-            reproduce, distribute, archive, and make the work accessible in both print and digital formats
-            worldwide. Authors retain moral rights of authorship, including the right to be credited and to
-            object to derogatory treatment of their work.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            In specific cases, where funding bodies or institutions mandate that authors retain copyright, the
-            Journal may publish under an alternative copyright agreement. Such arrangements must be communicated
-            and approved at the time of submission.
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Third-Party Material</h3>
+          <p>
+            Authors are responsible for obtaining permission to use any copyrighted material (such as figures, tables, or images) that is not their own original work. Documentation of such permissions must be provided to the Journal at the time of submission. Failure to secure appropriate permissions may result in delays or withdrawal of the manuscript.
           </p>
         </section>
 
         <section>
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
-            Author Rights
-          </h3>
-          <p className="text-gray-700 leading-relaxed">
-            Authors who publish with <em>Acta Clinica Croatica</em> retain certain rights to their work. They
-            include the right to:
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Preprints and Prior Versions</h3>
+          <p>
+            Croatian Medical Journal permits authors to post preprints of their manuscripts (prior to peer review) in recognized preprint servers or institutional repositories. However, once accepted and published in the Journal, the official published version should be cited in preference to preprints. Authors are encouraged to update preprint records with a DOI link to the final version in the Journal.
           </p>
-          <ul className="list-disc list-inside space-y-2 ml-4 mt-3 text-gray-700">
-            <li>Use the article in their own teaching and presentations</li>
-            <li>Share the article on personal or institutional websites</li>
-            <li>Include the article in grant applications and CVs</li>
-            <li>Post preprints or accepted manuscripts in institutional repositories</li>
-          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Reuse of Journal Content</h3>
+          <p>
+            Readers and institutions may use Journal content for educational, research, and non-commercial purposes in accordance with the terms of the applicable Creative Commons license. Reuse for commercial distribution, systematic reproduction, or the creation of derivative commercial products is not permitted without express written authorization from the Journal.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Archiving and Preservation</h3>
+          <p>
+            Croatian Medical Journal is committed to the long-term preservation of its scholarly content. All published articles are archived in institutional repositories, indexing services, and permanent digital archives to ensure ongoing accessibility, even in the event that the Journal ceases publication.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Disclaimer</h3>
+          <p>
+            While the Journal endeavors to ensure that copyright and licensing information is accurate at the time of publication, responsibility for compliance with copyright law rests with the authors and users of published content. The Journal accepts no liability for copyright infringement arising from submitted or published works.
+          </p>
         </section>
       </div>
     </div>

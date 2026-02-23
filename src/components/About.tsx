@@ -29,33 +29,38 @@ export default function About({ onNavigateHome }: AboutProps) {
           The journal encourages submissions from all branches of medicine and health sciences, with an emphasis on research that bridges laboratory investigation and clinical application. Its readership includes clinicians, biomedical researchers, public health professionals, and policy-makers interested in current developments in patient care, diagnostics, and therapeutic innovation.
         </p>
 
-        <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Aims</h3>
-
-        <p>The journal seeks to:</p>
+        <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Why Publish with CMJ</h3>
 
         <ul className="list-disc pl-6 space-y-2">
-          <li>Promote high-quality clinical and translational research that improves patient outcomes.</li>
-          <li>Foster collaboration between researchers, clinicians, and healthcare professionals worldwide.</li>
-          <li>Provide a platform for the dissemination of innovative medical research and evidence-based practice.</li>
-          <li>Support the professional development of medical researchers and practitioners.</li>
-          <li>Contribute to the advancement of medical education and healthcare policy.</li>
+          <li>Rigorous double-blind peer review</li>
+          <li>Transparent editorial process</li>
+          <li>Open access publication</li>
+          <li>Rapid decision and publication timelines</li>
         </ul>
 
-        <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Scope</h3>
-
-        <p>
-          The Croatian Medical Journal welcomes original research articles, systematic reviews, meta-analyses, case reports, and educational articles across all medical disciplines including but not limited to:
-        </p>
+        <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Aims and Scope</h3>
 
         <ul className="list-disc pl-6 space-y-2">
-          <li>Internal Medicine and Subspecialties</li>
-          <li>Surgery and Surgical Specialties</li>
-          <li>Pediatrics and Neonatology</li>
-          <li>Obstetrics and Gynecology</li>
-          <li>Psychiatry and Mental Health</li>
+          <li>Clinical Medicine</li>
+          <li>Surgery and Subspecialties</li>
           <li>Public Health and Epidemiology</li>
-          <li>Medical Education and Ethics</li>
-          <li>Diagnostic and Therapeutic Technologies</li>
+          <li>Basic Medical Sciences</li>
+          <li>Translational Medicine</li>
+          <li>Medical Education</li>
+          <li>Healthcare Systems and Policy</li>
+          <li>Bioethics</li>
+        </ul>
+
+        <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Article Types</h3>
+
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Original Research Articles</li>
+          <li>Review Articles</li>
+          <li>Systematic Reviews & Meta-Analyses</li>
+          <li>Case Reports</li>
+          <li>Short Communications</li>
+          <li>Editorials</li>
+          <li>Letters to the Editor</li>
         </ul>
 
         <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Publication Ethics</h3>

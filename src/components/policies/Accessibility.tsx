@@ -20,41 +20,33 @@ export default function Accessibility({ onNavigateHome }: AccessibilityProps) {
         Accessibility
       </h2>
 
-      <div className="space-y-8">
+      <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
-          <p className="text-gray-700 leading-relaxed">
-            <em>Acta Clinica Croatica</em> is committed to ensuring that its website and published content are
-            accessible to all users, including individuals with disabilities. We strive to provide an inclusive
-            online environment that supports equal access to scholarly knowledge.
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Published Content</h3>
+          <p>
+            Articles published in Croatian Medical Journal are available in accessible PDF formats where feasible. We encourage authors to submit manuscripts that comply with accessibility standards, including the use of clear structure, descriptive figure legends, and accessible tables. Efforts are ongoing to enhance the accessibility of both current and archived content.
           </p>
         </section>
 
         <section>
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
-            Our Commitment
-          </h3>
-          <p className="text-gray-700 leading-relaxed">
-            We are actively working to improve the accessibility and usability of our website in line with
-            recognized accessibility standards, including the Web Content Accessibility Guidelines (WCAG) 2.1,
-            Level AA. Our goal is to make all published materials, resources, and services available to the
-            widest possible audience, regardless of technology, ability, or circumstance.
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Third-Party Platforms</h3>
+          <p>
+            Some content may be hosted on or linked to external platforms (e.g., indexing services, repositories). The Journal is not responsible for the accessibility of third-party sites but encourages partners and service providers to adopt accessibility best practices.
           </p>
         </section>
 
         <section>
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
-            Website Features
-          </h3>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            The Journal's website has been designed with the following accessibility features:
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Ongoing Improvements</h3>
+          <p>
+            Accessibility is an ongoing process. We are continuously reviewing our website and workflows to identify and address potential barriers. Feedback from users plays an important role in helping us improve accessibility.
           </p>
-          <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700">
-            <li>Responsive design to ensure compatibility with a wide range of devices, including mobile phones and tablets.</li>
-            <li>Structured headings and semantic HTML to support screen readers and assistive technologies.</li>
-            <li>Alternative text descriptions for images and figures where possible.</li>
-            <li>Keyboard navigation support for users who cannot use a mouse.</li>
-            <li>Clear, readable fonts and sufficient color contrast for improved readability.</li>
-          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Compliance Statement</h3>
+          <p>
+            This Accessibility Statement was last reviewed and updated on [Insert Date]. Croatian Medical Journal is committed to progressively enhancing accessibility and welcomes collaboration with readers, authors, and institutions to ensure an inclusive publishing environment.
+          </p>
         </section>
       </div>
     </div>

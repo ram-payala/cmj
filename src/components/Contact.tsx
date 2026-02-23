@@ -23,13 +23,12 @@ export default function Contact({ onNavigateHome }: ContactProps) {
           <h3 className="text-2xl font-bold text-gray-700 mb-6">Principal Contact</h3>
 
           <div className="space-y-3">
-            <p className="text-gray-800 font-medium">Mirna Šitum</p>
             <a
-              href="mailto:editor@actaclinicacroatica.com"
+              href="mailto:manuscripts@croatianmedicaljournal.com"
               className="flex items-center gap-2 text-[#4195A3] hover:underline"
             >
               <Mail size={18} />
-              editor@actaclinicacroatica.com
+              manuscripts@croatianmedicaljournal.com
             </a>
           </div>
         </section>
@@ -38,27 +37,16 @@ export default function Contact({ onNavigateHome }: ContactProps) {
           <h3 className="text-2xl font-bold text-gray-700 mb-6">Support Contact</h3>
 
           <div className="space-y-3">
-            <p className="text-gray-800 font-medium">Ivan Horvat</p>
             <a
-              href="mailto:IvanHorvat@actaclinicacroatica.com"
+              href="mailto:manuscripts@croatianmedicaljournal.com"
               className="flex items-center gap-2 text-[#4195A3] hover:underline"
             >
               <Mail size={18} />
-              IvanHorvat@actaclinicacroatica.com
+              manuscripts@croatianmedicaljournal.com
             </a>
           </div>
         </section>
       </div>
-
-      <section className="mt-12 pt-8 border-t border-gray-200">
-        <h3 className="text-xl font-bold text-gray-700 mb-4">Editorial Office</h3>
-        <div className="text-gray-700 space-y-2">
-          <p>Acta Clinica Croatica</p>
-          <p>University Hospital Centre Zagreb</p>
-          <p>Kišpatićeva 12, 10000 Zagreb</p>
-          <p>Croatia</p>
-        </div>
-      </section>
     </div>
   );
 }

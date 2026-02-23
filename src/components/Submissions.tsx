@@ -53,6 +53,20 @@ export default function Submissions({ onNavigateHome, onNavigateLogin, onNavigat
       <div className="space-y-8">
         <section>
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
+            Submission Preparation Checklist
+          </h3>
+          <p className="text-gray-700 mb-4">All submissions must meet the following requirements.</p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <li>This submission meets the requirements outlined in the Author Guidelines.</li>
+            <li>This submission has not been previously published, nor is it before another journal for consideration.</li>
+            <li>All references have been checked for accuracy and completeness.</li>
+            <li>All tables and figures have been numbered and labeled.</li>
+            <li>Permission has been obtained to publish all photos, datasets and other material provided with this submission.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">
             Author Guidelines
           </h3>
           <p className="text-gray-700 leading-relaxed mb-4">

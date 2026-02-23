@@ -16,55 +16,60 @@ export default function ReviewerGuidelines({ onNavigateHome }: ReviewerGuideline
         <span>Reviewer Guidelines</span>
       </div>
 
-      <h2 className="text-4xl font-bold text-gray-800 mb-8">
-        Reviewer Guidelines
-      </h2>
+      <h2 className="text-4xl font-bold text-gray-800 mb-8">Reviewer Guidelines</h2>
 
-      <div className="space-y-8">
+      <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
-          <h3 className="text-xl font-bold text-gray-800 mb-3">
-            Review Guidelines for ACTA CLINICA CROATICA
-          </h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Review Form Evaluation Criteria</h3>
+          <p className="mb-4">Please assess the manuscript based on the following questions:</p>
+          <ol className="list-decimal pl-6 space-y-2">
+            <li>Is the manuscript relevant to the journal&apos;s readership?</li>
+            <li>Does the title accurately reflect the content?</li>
+            <li>Is the abstract informative and sufficient when read independently?</li>
+            <li>Does the introduction clearly define the subject, research context, and relevance?</li>
+            <li>Are the methods and materials appropriately detailed and clearly described?</li>
+            <li>Are the results presented clearly and logically?</li>
+            <li>Does the discussion connect the findings with existing literature and knowledge?</li>
+            <li>Are the interpretations and conclusions supported by the data?</li>
+            <li>Is the structure and organization of the manuscript coherent and clear?</li>
+            <li>Is the length of the manuscript appropriate for its content?</li>
+            <li>Are illustrations and tables adequate, relevant, and informative?</li>
+            <li>
+              Are the references appropriate, sufficient, and compliant with the journal&apos;s reference style?
+              (Refer to: NLM Reference Style)
+            </li>
+          </ol>
         </section>
 
         <section>
-          <p className="text-gray-700 leading-relaxed">
-            <em>ACTA CLINICA CROATICA</em> is a peer-reviewed scientific journal that employs a{' '}
-            <strong>double-blind review process</strong>, ensuring that the identities of both authors and
-            reviewers remain confidential throughout the evaluation.
-          </p>
-        </section>
-
-        <section>
-          <p className="text-gray-700 leading-relaxed">
-            As a reviewer, we kindly ask you to consider the following when conducting your assessment:
-          </p>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-bold text-gray-800 mb-4">
-            Key Points to Evaluate:
-          </h3>
-          <ul className="space-y-4 ml-6">
-            <li className="text-gray-700 leading-relaxed">
-              <strong>Compliance with Submission Criteria:</strong> Ensure the manuscript adheres to the
-              journal's guidelines regarding length, scope, formatting, and presentation.
-            </li>
-            <li className="text-gray-700 leading-relaxed">
-              <strong>Completion of Review Form:</strong> Provide clear responses to each question on the review
-              form to reflect your evaluation of the manuscript's overall quality.
-            </li>
-            <li className="text-gray-700 leading-relaxed">
-              <strong>Balanced Critique:</strong> If you disagree with the authors' views, you may allow them to
-              stand provided they are evidence-based. Constructive criticism is highly valued and welcomed by
-              both the editorial team and the authors.
-            </li>
-            <li className="text-gray-700 leading-relaxed">
-              <strong>Rejection Justification:</strong> If you recommend that the manuscript be declined, please
-              provide detailed and thoughtful reasoning. Thorough feedback—whether positive or negative—is
-              appreciated.
-            </li>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Overall Manuscript Evaluation</h3>
+          <p className="mb-2">Please select one of the following options:</p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>A – Accept without changes</li>
+            <li>B – Accept with minor revisions</li>
+            <li>C – Major revisions required before reconsideration</li>
+            <li>D – Reject</li>
           </ul>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Suggested Manuscript Category</h3>
+          <p className="mb-2">Please classify the manuscript into one of the following categories:</p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>A – Original Scientific Paper</li>
+            <li>B – Preliminary Communication</li>
+            <li>C – Review Article</li>
+            <li>D – Professional Paper</li>
+            <li>E – Conference Paper</li>
+            <li>F – Case Report</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>
+            We encourage you to include comments and elaborations where appropriate, as well as any additional
+            remarks that may assist the authors and editors in their evaluation.
+          </p>
         </section>
       </div>
     </div>
