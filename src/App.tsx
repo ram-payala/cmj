@@ -18,6 +18,9 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import EditProfile from './components/auth/EditProfile';
 import Contact from './components/Contact';
+import InfoForReaders from './components/InfoForReaders';
+import InfoForAuthors from './components/InfoForAuthors';
+import InfoForLibrarians from './components/InfoForLibrarians';
 import SubmitResearch from './components/SubmitResearch';
 import MySubmissions from './components/dashboard/MySubmissions';
 import SubmissionDetail from './components/dashboard/SubmissionDetail';
@@ -26,7 +29,7 @@ import { User } from './types/user';
 import { supabase } from './lib/supabase';
 import { mapSupabaseUserToAppUser } from './lib/auth';
 
-type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'my-submissions' | 'submission-detail' | 'admin' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact' | 'edit-profile';
+type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'my-submissions' | 'submission-detail' | 'admin' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'info-readers' | 'info-authors' | 'info-librarians' | 'register' | 'login' | 'contact' | 'edit-profile';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -209,6 +212,22 @@ function App() {
                   />
                 ) : currentPage === 'contact' ? (
                   <Contact onNavigateHome={() => setCurrentPage('home')} />
+                ) : currentPage === 'info-readers' ? (
+                  <InfoForReaders
+                    onNavigateHome={() => setCurrentPage('home')}
+                    onNavigateRegister={() => setCurrentPage('register')}
+                    onNavigatePrivacy={() => setCurrentPage('privacy-policy')}
+                  />
+                ) : currentPage === 'info-authors' ? (
+                  <InfoForAuthors
+                    onNavigateHome={() => setCurrentPage('home')}
+                    onNavigateAbout={() => setCurrentPage('about')}
+                    onNavigateAuthorGuidelines={() => setCurrentPage('author-guidelines')}
+                    onNavigateRegister={() => setCurrentPage('register')}
+                    onNavigateLogin={() => setCurrentPage('login')}
+                  />
+                ) : currentPage === 'info-librarians' ? (
+                  <InfoForLibrarians onNavigateHome={() => setCurrentPage('home')} />
                 ) : currentPage === 'edit-profile' ? (
                   <EditProfile
                     user={user}
@@ -217,7 +236,12 @@ function App() {
                 ) : null}
               </main>
 
-              <Sidebar onNavigateSubmit={user ? () => setCurrentPage('submit-research') : () => setCurrentPage('submissions')} />
+              <Sidebar
+                onNavigateSubmit={user ? () => setCurrentPage('submit-research') : () => setCurrentPage('submissions')}
+                onNavigateInfoReaders={() => setCurrentPage('info-readers')}
+                onNavigateInfoAuthors={() => setCurrentPage('info-authors')}
+                onNavigateInfoLibrarians={() => setCurrentPage('info-librarians')}
+              />
             </div>
           </div>
         </div>

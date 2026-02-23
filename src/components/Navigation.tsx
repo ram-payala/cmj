@@ -18,14 +18,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
         { label: 'ABOUT THE JOURNAL', page: 'about' as const },
       ],
     },
-    {
-      label: 'BROWSE CONTENT',
-      hasDropdown: true,
-      page: null,
-      submenu: [
-        { label: 'LATEST ISSUE', page: 'browse' as const },
-      ],
-    },
+    { label: 'BROWSE CONTENT', hasDropdown: false, page: null, submenu: [] },
     { label: 'SUBMISSIONS', hasDropdown: false, page: 'submissions' as const, submenu: [] },
     {
       label: 'AUTHOR GUIDELINES',
@@ -43,7 +36,6 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
         { label: 'OPEN ACCESS POLICY', page: 'open-access' as const },
         { label: 'PUBLISHING ETHICS', page: 'publishing-ethics' as const },
         { label: 'REVIEWER GUIDELINES', page: 'reviewer-guidelines' as const },
-        { label: 'PRIVACY POLICY', page: 'privacy-policy' as const },
         { label: 'COPYRIGHT & LICENSING', page: 'copyright-licensing' as const },
         { label: 'TERMS & CONDITIONS', page: 'terms-conditions' as const },
         { label: 'ACCESSIBILITY', page: 'accessibility' as const },
@@ -80,8 +72,14 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                   {item.submenu.map((subItem, subIndex) => (
                     <button
                       key={subIndex}
-                      onClick={() => subItem.page && onNavigate(subItem.page)}
-                      className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#4195A3] hover:text-white transition-colors"
+                      type="button"
+                      onClick={() => !(subItem as { disabled?: boolean }).disabled && subItem.page && onNavigate(subItem.page)}
+                      disabled={(subItem as { disabled?: boolean }).disabled}
+                      className={`block w-full text-left px-4 py-3 text-sm transition-colors ${
+                        (subItem as { disabled?: boolean }).disabled
+                          ? 'text-gray-400 cursor-not-allowed'
+                          : 'text-gray-700 hover:bg-[#4195A3] hover:text-white'
+                      }`}
                     >
                       {subItem.label}
                     </button>
