@@ -107,6 +107,7 @@ function App() {
                     setSelectedSubmissionId(id);
                     setCurrentPage('submission-detail');
                   }}
+                  onNewSubmission={() => setCurrentPage('submit-research')}
                 />
               ) : currentPage === 'my-submissions' ? (
                 <MySubmissions
@@ -127,9 +128,9 @@ function App() {
                 />
               ) : currentPage === 'submit-research' ? (
                 <SubmitResearch
-                  onNavigateBack={() => setCurrentPage('submissions')}
+                  onNavigateBack={() => setCurrentPage(user?.role === 'admin' ? 'admin' : 'submissions')}
                   onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
-                  onSubmissionSuccess={() => setCurrentPage('my-submissions')}
+                  onSubmissionSuccess={() => setCurrentPage(user?.role === 'admin' ? 'admin' : 'my-submissions')}
                 />
               ) : null}
             </div>
@@ -216,7 +217,7 @@ function App() {
                 ) : null}
               </main>
 
-              <Sidebar onNavigateSubmit={user ? () => setCurrentPage('my-submissions') : () => setCurrentPage('submissions')} />
+              <Sidebar onNavigateSubmit={user ? () => setCurrentPage('submit-research') : () => setCurrentPage('submissions')} />
             </div>
           </div>
         </div>

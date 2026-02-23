@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabase';
 interface AdminProps {
   onNavigateBack: () => void;
   onViewSubmission: (submissionId: string) => void;
+  onNewSubmission: () => void;
 }
 
 interface SubmissionRow {
@@ -14,7 +15,7 @@ interface SubmissionRow {
   title: string;
 }
 
-export default function Admin({ onNavigateBack, onViewSubmission }: AdminProps) {
+export default function Admin({ onNavigateBack, onViewSubmission, onNewSubmission }: AdminProps) {
   const [submissions, setSubmissions] = useState<SubmissionRow[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +47,16 @@ export default function Admin({ onNavigateBack, onViewSubmission }: AdminProps) 
         </button>
       </div>
 
-      <h2 className="text-4xl font-bold text-gray-800 mb-8">All Submissions</h2>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <h2 className="text-4xl font-bold text-gray-800">All Submissions</h2>
+        <button
+          type="button"
+          onClick={onNewSubmission}
+          className="px-6 py-2 bg-[#4195A3] text-white rounded hover:bg-[#327d89] transition-colors font-medium"
+        >
+          New Submission
+        </button>
+      </div>
 
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         {loading ? (
