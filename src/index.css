@@ -29,3 +29,10 @@
   --teal-dark: #327d89;
   --teal-light: #5aafbd;
 }
+
+/* Register country dropdown: dark option when selected/hover */
+.country-select option:checked,
+.country-select option:hover {
+  background: #374151;
+  color: white;
+}

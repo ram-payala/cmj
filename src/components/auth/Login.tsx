@@ -1,19 +1,47 @@
 import { Home } from 'lucide-react';
 import { useState } from 'react';
+import { supabase } from '../../lib/supabase';
 
 interface LoginProps {
   onNavigateHome: () => void;
   onNavigateRegister: () => void;
-  onLogin: () => void;
+  onLoginSuccess: () => void;
 }
 
-export default function Login({ onNavigateHome, onNavigateRegister, onLogin }: LoginProps) {
+export default function Login({ onNavigateHome, onNavigateRegister, onLoginSuccess }: LoginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    setError('');
+    setLoading(true);
+
+    const { data: emailData, error: rpcError } = await supabase.rpc('get_email_by_username', {
+      uname: username.trim(),
+    });
+
+    if (rpcError || emailData == null || emailData === '') {
+      setLoading(false);
+      setError('Invalid username or password.');
+      return;
+    }
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: emailData as string,
+      password,
+    });
+
+    setLoading(false);
+
+    if (signInError) {
+      setError('Invalid username or password.');
+      return;
+    }
+
+    onLoginSuccess();
   };
 
   return (
@@ -33,16 +61,23 @@ export default function Login({ onNavigateHome, onNavigateRegister, onLogin }: L
         Required fields are marked with an asterisk: <span className="text-red-600">*</span>
       </p>
 
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6 text-sm">
+          {error}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-6 max-w-md">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Username or Email <span className="text-red-600">*</span>
+            Username <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#4195A3]"
           />
         </div>
@@ -73,9 +108,10 @@ export default function Login({ onNavigateHome, onNavigateRegister, onLogin }: L
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-gray-300 text-gray-700 font-medium rounded hover:bg-gray-400 transition-colors"
+            disabled={loading}
+            className="px-6 py-2 bg-gray-300 text-gray-700 font-medium rounded hover:bg-gray-400 transition-colors disabled:opacity-50"
           >
-            Login
+            {loading ? 'Signing in…' : 'Login'}
           </button>
         </div>
       </form>

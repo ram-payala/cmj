@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Sidebar from './components/Sidebar';
@@ -17,21 +17,45 @@ import TermsConditions from './components/policies/TermsConditions';
 import Accessibility from './components/policies/Accessibility';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import EditProfile from './components/auth/EditProfile';
 import Contact from './components/Contact';
 import SubmitResearch from './components/SubmitResearch';
+import MySubmissions from './components/dashboard/MySubmissions';
+import SubmissionDetail from './components/dashboard/SubmissionDetail';
+import { User } from './types/user';
+import { supabase } from './lib/supabase';
+import { mapSupabaseUserToAppUser } from './lib/auth';
 
-type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact';
+type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'my-submissions' | 'submission-detail' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact' | 'edit-profile';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState<string>('');
+  const [user, setUser] = useState<User | null>(null);
 
-  const handleRegister = () => {
-    alert('Registration successful! (Frontend only - no database integration yet)');
-    setCurrentPage('home');
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) setUser(mapSupabaseUserToAppUser(session.user));
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ? mapSupabaseUserToAppUser(session.user) : null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleRegisterSuccess = () => {
+    setCurrentPage('my-submissions');
   };
 
-  const handleLogin = () => {
-    alert('Login successful! (Frontend only - no database integration yet)');
+  const handleLoginSuccess = () => {
+    setCurrentPage('my-submissions');
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
     setCurrentPage('home');
   };
 
@@ -56,9 +80,51 @@ function App() {
       <SubmitResearch
         onNavigateBack={() => setCurrentPage('submissions')}
         onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
-        userName="Admin JoC"
-        userInitials="AJ"
+        userName={user?.name || 'Admin JoC'}
+        userInitials={user?.initials || 'AJ'}
       />
+    );
+  }
+
+  // Render dashboard pages separately (they have their own layout)
+  if (currentPage === 'my-submissions' || currentPage === 'submission-detail') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-white border-l border-r border-gray-200 mx-auto w-full" style={{ maxWidth: '1500px', width: '100%' }}>
+          <Header
+            onNavigateHome={() => setCurrentPage('home')}
+            onNavigateRegister={() => setCurrentPage('register')}
+            onNavigateLogin={() => setCurrentPage('login')}
+            onNavigateEditProfile={() => setCurrentPage('edit-profile')}
+            user={user}
+            onLogout={handleLogout}
+          />
+          <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+
+          <div className="flex-1">
+            <div className="mx-auto px-12 py-8" style={{ maxWidth: '1400px' }}>
+              {currentPage === 'my-submissions' ? (
+                <MySubmissions
+                  onNavigateBack={() => setCurrentPage('home')}
+                  onViewSubmission={(id) => {
+                    setSelectedSubmissionId(id);
+                    setCurrentPage('submission-detail');
+                  }}
+                  onNewSubmission={() => setCurrentPage('submit-research')}
+                  user={user}
+                />
+              ) : currentPage === 'submission-detail' ? (
+                <SubmissionDetail
+                  submissionId={selectedSubmissionId}
+                  onNavigateBack={() => setCurrentPage('my-submissions')}
+                />
+              ) : null}
+            </div>
+          </div>
+
+          <Footer />
+        </div>
+      </div>
     );
   }
 
@@ -69,6 +135,9 @@ function App() {
           onNavigateHome={() => setCurrentPage('home')}
           onNavigateRegister={() => setCurrentPage('register')}
           onNavigateLogin={() => setCurrentPage('login')}
+          onNavigateEditProfile={() => setCurrentPage('edit-profile')}
+          user={user}
+          onLogout={handleLogout}
         />
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
 
@@ -120,16 +189,21 @@ function App() {
                   <Register
                     onNavigateHome={() => setCurrentPage('home')}
                     onNavigateLogin={() => setCurrentPage('login')}
-                    onRegister={handleRegister}
+                    onRegisterSuccess={handleRegisterSuccess}
                   />
                 ) : currentPage === 'login' ? (
                   <Login
                     onNavigateHome={() => setCurrentPage('home')}
                     onNavigateRegister={() => setCurrentPage('register')}
-                    onLogin={handleLogin}
+                    onLoginSuccess={handleLoginSuccess}
                   />
                 ) : currentPage === 'contact' ? (
                   <Contact onNavigateHome={() => setCurrentPage('home')} />
+                ) : currentPage === 'edit-profile' ? (
+                  <EditProfile
+                    user={user}
+                    onNavigateBack={() => setCurrentPage('my-submissions')}
+                  />
                 ) : null}
               </main>
 
