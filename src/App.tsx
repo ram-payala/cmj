@@ -57,8 +57,8 @@ function App() {
     setCurrentPage('my-submissions');
   };
 
-  const handleLoginSuccess = () => {
-    setCurrentPage('my-submissions');
+  const handleLoginSuccess = (role?: 'user' | 'admin') => {
+    setCurrentPage(role === 'admin' ? 'admin' : 'my-submissions');
   };
 
   const handleLogout = async () => {

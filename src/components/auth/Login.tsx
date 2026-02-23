@@ -5,7 +5,7 @@ import { supabase } from '../../lib/supabase';
 interface LoginProps {
   onNavigateHome: () => void;
   onNavigateRegister: () => void;
-  onLoginSuccess: () => void;
+  onLoginSuccess: (role?: 'user' | 'admin') => void;
 }
 
 export default function Login({ onNavigateHome, onNavigateRegister, onLoginSuccess }: LoginProps) {
@@ -41,7 +41,11 @@ export default function Login({ onNavigateHome, onNavigateRegister, onLoginSucce
       return;
     }
 
-    onLoginSuccess();
+    const { data: { session } } = await supabase.auth.getSession();
+    const role = session?.user
+      ? ((await supabase.from('users').select('role').eq('id', session.user.id).maybeSingle()).data?.role as 'user' | 'admin' | undefined) ?? 'user'
+      : 'user';
+    onLoginSuccess(role);
   };
 
   return (
