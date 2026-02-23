@@ -1,22 +1,36 @@
 import { useState } from 'react';
-import { ArrowLeft, ChevronRight, ChevronDown, Check } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
 import { Step, SubmissionData } from '../types/submission';
 import DetailsStep from './submission/DetailsStep';
 import UploadStep from './submission/UploadStep';
 import ContributorsStep from './submission/ContributorsStep';
 import EditorsStep from './submission/EditorsStep';
 import ReviewStep from './submission/ReviewStep';
+import { supabase } from '../lib/supabase';
+
+const ARTICLE_TYPE_TO_DB: Record<string, string> = {
+  'original-research': 'original_research_article',
+  'clinical-trial': 'clinical_trial_or_case_study',
+  'review-article': 'review_article',
+  'systematic-review': 'systematic_review',
+  'meta-analysis': 'meta_analysis',
+  'theoretical-methodological': 'theoretical_and_methodological_article',
+  'short-communication': 'short_communication',
+  'case-report': 'case_report',
+};
 
 interface SubmitResearchProps {
   onNavigateBack: () => void;
   onNavigateToGuidelines?: () => void;
-  userName?: string;
-  userInitials?: string;
+  onSubmissionSuccess?: () => void;
 }
 
-export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines, userName = 'Admin JoC', userInitials = 'AJ' }: SubmitResearchProps) {
+export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines, onSubmissionSuccess }: SubmitResearchProps) {
   const [currentStep, setCurrentStep] = useState<Step>('details');
   const [validationTrigger, setValidationTrigger] = useState(0);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<SubmissionData>({
     title: '',
     articleType: '',
@@ -127,10 +141,99 @@ export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines,
     setCurrentStep(stepId);
   };
 
-  const handleSubmit = () => {
-    if (formData.finalConfirmation) {
-      alert('Submission successful! (Frontend only - no backend integration yet)');
-      onNavigateBack();
+  const handleSubmitClick = () => {
+    if (!formData.finalConfirmation) return;
+    setSubmitError(null);
+    setShowConfirmModal(true);
+  };
+
+  const performSubmit = async () => {
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (!authUser?.id) {
+        setSubmitError('You must be signed in to submit.');
+        setSubmitting(false);
+        return;
+      }
+      const dbArticleType = ARTICLE_TYPE_TO_DB[formData.articleType] || 'original_research_article';
+
+      const { data: submission, error: subErr } = await supabase
+        .from('submissions')
+        .insert({
+          user_id: authUser.id,
+          title: formData.title.trim(),
+          article_type: dbArticleType,
+          keywords: formData.keywords?.trim() || null,
+          abstract: formData.abstract.trim(),
+          editor_comments: formData.editorComments?.trim() || null,
+          status: 'submission',
+          submitted_at: new Date().toISOString(),
+          word_count: 0,
+          page_count: 0,
+          privacy_consent: formData.privacyConsent,
+          privacy_consent_date: formData.privacyConsent ? new Date().toISOString() : null,
+        })
+        .select('id')
+        .single();
+
+      if (subErr || !submission?.id) {
+        setSubmitError(subErr?.message || 'Failed to create submission.');
+        setSubmitting(false);
+        return;
+      }
+
+      const submissionId = submission.id;
+
+      for (let i = 0; i < formData.contributors.length; i++) {
+        const c = formData.contributors[i];
+        await supabase.from('submission_contributors').insert({
+          submission_id: submissionId,
+          name: c.name.trim(),
+          email: c.email.trim(),
+          affiliation: c.affiliation.trim(),
+          role: c.role || 'Author',
+          order_index: i,
+        });
+      }
+
+      for (let i = 0; i < formData.files.length; i++) {
+        const file = formData.files[i];
+        const ext = file.name.split('.').pop() || '';
+        const safeName = `${Date.now()}_${i}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const storagePath = `${authUser.id}/${submissionId}/${safeName}`;
+        const { error: uploadErr } = await supabase.storage
+          .from('submission-files')
+          .upload(storagePath, file, { contentType: file.type || 'application/octet-stream' });
+
+        if (uploadErr) {
+          setSubmitError(`File upload failed: ${uploadErr.message}`);
+          setSubmitting(false);
+          return;
+        }
+
+        await supabase.from('submission_files').insert({
+          submission_id: submissionId,
+          file_name: safeName,
+          original_name: file.name,
+          file_path: storagePath,
+          file_size: file.size,
+          mime_type: file.type || 'application/octet-stream',
+          file_extension: ext || null,
+          file_type: 'manuscript',
+          is_primary: i === 0,
+          stage: 'submission',
+          uploaded_by: authUser.id,
+        });
+      }
+
+      setShowConfirmModal(false);
+      (onSubmissionSuccess || onNavigateBack)();
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Submission failed.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -156,30 +259,18 @@ export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines,
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="min-h-screen bg-white border-l border-r border-gray-200 mx-auto w-full" style={{ maxWidth: '1500px', width: '100%' }}>
-        {/* Header */}
-        <header className="bg-[#4195A3] text-white">
-          <div className="mx-auto px-12 py-5 flex justify-between items-center" style={{ maxWidth: '1500px' }}>
-            <button
-              onClick={onNavigateBack}
-              className="flex items-center gap-2 hover:text-gray-200 transition-colors"
-            >
-              <ArrowLeft size={20} />
-              <span>Back to Submissions</span>
-            </button>
-            <h1 className="text-2xl font-bold tracking-wide">CROATIAN MEDICAL JOURNAL</h1>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white text-[#4195A3] flex items-center justify-center font-bold">
-                {userInitials}
-              </div>
-              <span>{userName}</span>
-              <ChevronDown size={16} />
-            </div>
-          </div>
-        </header>
+    <div>
+      <div className="mb-6">
+        <button
+          onClick={onNavigateBack}
+          className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#4195A3] transition-colors"
+        >
+          <ArrowLeft size={16} />
+          <span>Back to Submissions</span>
+        </button>
+      </div>
 
-        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-73px)]">
+      <div className="flex flex-col lg:flex-row">
           {/* Sidebar */}
           <aside className="w-full lg:w-64 bg-white border-r border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-800 mb-6">Submit Your Research</h2>
@@ -260,7 +351,7 @@ export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines,
                     </button>
                   ) : (
                     <button
-                      onClick={handleSubmit}
+                      onClick={handleSubmitClick}
                       disabled={!formData.finalConfirmation}
                       className="px-6 py-2 bg-[#4195A3] text-white rounded hover:bg-[#327d89] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
@@ -272,7 +363,37 @@ export default function SubmitResearch({ onNavigateBack, onNavigateToGuidelines,
             </div>
           </main>
       </div>
-      </div>
+
+      {/* Submit confirmation modal */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Confirm submission</h3>
+            <p className="text-gray-600 mb-6">Are you sure you want to submit? You cannot undo this.</p>
+            {submitError && (
+              <p className="text-red-600 text-sm mb-4">{submitError}</p>
+            )}
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => !submitting && setShowConfirmModal(false)}
+                disabled={submitting}
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={performSubmit}
+                disabled={submitting}
+                className="px-4 py-2 bg-[#4195A3] text-white rounded hover:bg-[#327d89] disabled:opacity-50"
+              >
+                {submitting ? 'Submitting…' : 'Submit'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

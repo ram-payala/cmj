@@ -66,7 +66,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
               <button
                 onClick={() => item.page && onNavigate(item.page)}
                 className={`flex items-center gap-1 hover:text-[#4195A3] transition-colors font-medium text-sm ${
-                  item.submenu?.some((sub) => sub.page === currentPage) || item.page === currentPage
+                  item.submenu?.some((sub) => sub.page === currentPage || (currentPage === 'home' && sub.page === 'about')) || item.page === currentPage
                     ? 'text-[#4195A3]'
                     : 'text-gray-700'
                 }`}

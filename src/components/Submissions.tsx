@@ -2,10 +2,13 @@ import { Home } from 'lucide-react';
 
 interface SubmissionsProps {
   onNavigateHome: () => void;
-  onNavigateSubmit?: () => void;
+  onNavigateLogin?: () => void;
+  onNavigateRegister?: () => void;
+  onMakeSubmission?: () => void;
+  isLoggedIn?: boolean;
 }
 
-export default function Submissions({ onNavigateHome, onNavigateSubmit }: SubmissionsProps) {
+export default function Submissions({ onNavigateHome, onNavigateLogin, onNavigateRegister, onMakeSubmission, isLoggedIn }: SubmissionsProps) {
   return (
     <div>
       <div className="mb-6 flex items-center gap-2 text-sm text-gray-600">
@@ -23,15 +26,26 @@ export default function Submissions({ onNavigateHome, onNavigateSubmit }: Submis
 
       <div className="bg-blue-50 border-l-4 border-[#4195A3] p-6 mb-8 flex items-center justify-between">
         <p className="text-gray-700">
-          <a href="#" className="text-[#4195A3] hover:underline font-medium">Login</a> or{' '}
-          <a href="#" className="text-[#4195A3] hover:underline font-medium">Register</a> to make a submission.
+          {!isLoggedIn && (
+            <>
+              <button type="button" onClick={onNavigateLogin} className="text-[#4195A3] hover:underline font-medium">
+                Login
+              </button>
+              {' or '}
+              <button type="button" onClick={onNavigateRegister} className="text-[#4195A3] hover:underline font-medium">
+                Register
+              </button>
+              {' to make a submission.'}
+            </>
+          )}
+          {isLoggedIn && <span>Submit a new manuscript or view your submissions.</span>}
         </p>
-        {onNavigateSubmit && (
+        {onMakeSubmission && (
           <button
-            onClick={onNavigateSubmit}
+            onClick={onMakeSubmission}
             className="px-6 py-2 bg-[#4195A3] text-white rounded hover:bg-[#327d89] transition-colors font-medium"
           >
-            Make a Submission
+            My Submissions
           </button>
         )}
       </div>

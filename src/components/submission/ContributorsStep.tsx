@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { User, Edit2, Trash2 } from 'lucide-react';
 import { StepComponentProps, Contributor } from '../../types/submission';
+import { supabase } from '../../lib/supabase';
 
 export default function ContributorsStep({ formData, updateFormData }: StepComponentProps) {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -12,24 +13,41 @@ export default function ContributorsStep({ formData, updateFormData }: StepCompo
     role: 'Author',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  // Initialize with current user if no contributors
+  // First contributor = logged-in user; fetch from DB when no contributors yet
   useEffect(() => {
-    if (formData.contributors.length === 0) {
-      updateFormData({
-        contributors: [
-          {
-            id: '1',
-            name: 'Admin JoC',
-            affiliation: 'International Institute of Information Technology',
-            email: 'editorial@cancerjournalresearch.org',
-            role: 'Author',
-          },
-        ],
-      });
+    if (formData.contributors.length > 0) {
+      setLoadingUser(false);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    (async () => {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (!authUser?.id) {
+        setLoadingUser(false);
+        return;
+      }
+      const { data: profile } = await supabase
+        .from('users')
+        .select('full_name, email, affiliation')
+        .eq('id', authUser.id)
+        .single();
+      if (profile) {
+        updateFormData({
+          contributors: [
+            {
+              id: '1',
+              name: (profile.full_name || profile.email || 'Author').trim(),
+              affiliation: (profile.affiliation || '').trim(),
+              email: (profile.email || '').trim(),
+              role: 'Author',
+            },
+          ],
+        });
+      }
+      setLoadingUser(false);
+    })();
+  }, [formData.contributors.length, updateFormData]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -98,6 +116,15 @@ export default function ContributorsStep({ formData, updateFormData }: StepCompo
   };
 
   const isMainAuthor = (id: string) => id === '1';
+
+  if (loadingUser && formData.contributors.length === 0) {
+    return (
+      <div>
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Contributors</h2>
+        <p className="text-gray-600">Loading your details…</p>
+      </div>
+    );
+  }
 
   return (
     <div>

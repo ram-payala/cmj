@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { ChevronDown, Settings, HelpCircle, LogOut, FileText, Shield } from 'lucide-react';
 import { User } from '../types/user';
 
 interface HeaderProps {
@@ -7,11 +7,12 @@ interface HeaderProps {
   onNavigateRegister: () => void;
   onNavigateLogin: () => void;
   onNavigateEditProfile?: () => void;
+  onNavigateMySubmissions?: () => void;
   user: User | null;
   onLogout: () => void;
 }
 
-export default function Header({ onNavigateHome, onNavigateRegister, onNavigateLogin, onNavigateEditProfile, user, onLogout }: HeaderProps) {
+export default function Header({ onNavigateHome, onNavigateRegister, onNavigateLogin, onNavigateEditProfile, onNavigateMySubmissions, user, onLogout }: HeaderProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -63,10 +64,28 @@ export default function Header({ onNavigateHome, onNavigateRegister, onNavigateL
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="p-4 border-b border-gray-200">
-                    <p className="font-semibold text-gray-800">{user.name}</p>
+                    <p className="font-semibold text-gray-800 flex items-center gap-2 flex-wrap">
+                      <span>{user.name}</span>
+                      {user.role === 'admin' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#4195A3] text-white">
+                          <Shield size={12} />
+                          Admin
+                        </span>
+                      )}
+                    </p>
                     <p className="text-sm text-gray-600 mt-1">{user.email}</p>
                   </div>
                   <div className="py-2">
+                    <button
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        onNavigateMySubmissions?.();
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <FileText size={18} className="text-gray-500" />
+                      <span>My Submissions</span>
+                    </button>
                     <button
                       onClick={() => {
                         setIsDropdownOpen(false);

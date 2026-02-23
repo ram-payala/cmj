@@ -3,7 +3,6 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
-import CurrentIssue from './components/CurrentIssue';
 import About from './components/About';
 import BrowseContent from './components/BrowseContent';
 import Submissions from './components/Submissions';
@@ -22,11 +21,12 @@ import Contact from './components/Contact';
 import SubmitResearch from './components/SubmitResearch';
 import MySubmissions from './components/dashboard/MySubmissions';
 import SubmissionDetail from './components/dashboard/SubmissionDetail';
+import Admin from './components/dashboard/Admin';
 import { User } from './types/user';
 import { supabase } from './lib/supabase';
 import { mapSupabaseUserToAppUser } from './lib/auth';
 
-type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'my-submissions' | 'submission-detail' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact' | 'edit-profile';
+type Page = 'home' | 'about' | 'browse' | 'submissions' | 'submit-research' | 'my-submissions' | 'submission-detail' | 'admin' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'register' | 'login' | 'contact' | 'edit-profile';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -34,12 +34,20 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    const loadUser = async (sbUser: Parameters<typeof mapSupabaseUserToAppUser>[0]) => {
+      const appUser = mapSupabaseUserToAppUser(sbUser);
+      const { data: row } = await supabase.from('users').select('role').eq('id', sbUser.id).maybeSingle();
+      setUser({ ...appUser, role: row?.role === 'admin' ? 'admin' : 'user' });
+    };
+
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) setUser(mapSupabaseUserToAppUser(session.user));
+      if (session?.user) loadUser(session.user);
+      else setUser(null);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ? mapSupabaseUserToAppUser(session.user) : null);
+      if (session?.user) loadUser(session.user);
+      else setUser(null);
     });
 
     return () => subscription.unsubscribe();
@@ -74,20 +82,8 @@ function App() {
     },
   ];
 
-  // Render submission form separately (it has its own layout)
-  if (currentPage === 'submit-research') {
-    return (
-      <SubmitResearch
-        onNavigateBack={() => setCurrentPage('submissions')}
-        onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
-        userName={user?.name || 'Admin JoC'}
-        userInitials={user?.initials || 'AJ'}
-      />
-    );
-  }
-
   // Render dashboard pages separately (they have their own layout)
-  if (currentPage === 'my-submissions' || currentPage === 'submission-detail') {
+  if (currentPage === 'my-submissions' || currentPage === 'submission-detail' || currentPage === 'submit-research' || currentPage === 'admin') {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <div className="min-h-screen bg-white border-l border-r border-gray-200 mx-auto w-full" style={{ maxWidth: '1500px', width: '100%' }}>
@@ -96,6 +92,7 @@ function App() {
             onNavigateRegister={() => setCurrentPage('register')}
             onNavigateLogin={() => setCurrentPage('login')}
             onNavigateEditProfile={() => setCurrentPage('edit-profile')}
+            onNavigateMySubmissions={user?.role === 'admin' ? () => setCurrentPage('admin') : () => setCurrentPage('my-submissions')}
             user={user}
             onLogout={handleLogout}
           />
@@ -103,7 +100,15 @@ function App() {
 
           <div className="flex-1">
             <div className="mx-auto px-12 py-8" style={{ maxWidth: '1400px' }}>
-              {currentPage === 'my-submissions' ? (
+              {currentPage === 'admin' ? (
+                <Admin
+                  onNavigateBack={() => setCurrentPage('home')}
+                  onViewSubmission={(id) => {
+                    setSelectedSubmissionId(id);
+                    setCurrentPage('submission-detail');
+                  }}
+                />
+              ) : currentPage === 'my-submissions' ? (
                 <MySubmissions
                   onNavigateBack={() => setCurrentPage('home')}
                   onViewSubmission={(id) => {
@@ -117,6 +122,14 @@ function App() {
                 <SubmissionDetail
                   submissionId={selectedSubmissionId}
                   onNavigateBack={() => setCurrentPage('my-submissions')}
+                  onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
+                  user={user}
+                />
+              ) : currentPage === 'submit-research' ? (
+                <SubmitResearch
+                  onNavigateBack={() => setCurrentPage('submissions')}
+                  onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
+                  onSubmissionSuccess={() => setCurrentPage('my-submissions')}
                 />
               ) : null}
             </div>
@@ -136,6 +149,7 @@ function App() {
           onNavigateRegister={() => setCurrentPage('register')}
           onNavigateLogin={() => setCurrentPage('login')}
           onNavigateEditProfile={() => setCurrentPage('edit-profile')}
+          onNavigateMySubmissions={user?.role === 'admin' ? () => setCurrentPage('admin') : () => setCurrentPage('my-submissions')}
           user={user}
           onLogout={handleLogout}
         />
@@ -145,15 +159,7 @@ function App() {
           <div className="mx-auto px-12 py-8" style={{ maxWidth: '1400px' }}>
             <div className="flex gap-12">
               <main className="flex-1">
-                {currentPage === 'home' ? (
-                  <CurrentIssue
-                    volume={64}
-                    issue={4}
-                    year={2025}
-                    publishedDate="2025-12-29"
-                    articles={mockArticles}
-                  />
-                ) : currentPage === 'about' ? (
+                {(currentPage === 'home' || currentPage === 'about') ? (
                   <About onNavigateHome={() => setCurrentPage('home')} />
                 ) : currentPage === 'browse' ? (
                   <BrowseContent
@@ -167,7 +173,10 @@ function App() {
                 ) : currentPage === 'submissions' ? (
                   <Submissions
                     onNavigateHome={() => setCurrentPage('home')}
-                    onNavigateSubmit={() => setCurrentPage('submit-research')}
+                    onNavigateLogin={() => setCurrentPage('login')}
+                    onNavigateRegister={() => setCurrentPage('register')}
+                    onMakeSubmission={() => (user ? setCurrentPage('my-submissions') : setCurrentPage('submissions'))}
+                    isLoggedIn={!!user}
                   />
                 ) : currentPage === 'author-guidelines' ? (
                   <AuthorGuidelines onNavigateHome={() => setCurrentPage('home')} />
@@ -207,7 +216,7 @@ function App() {
                 ) : null}
               </main>
 
-              <Sidebar onNavigateSubmit={() => setCurrentPage('submit-research')} />
+              <Sidebar onNavigateSubmit={user ? () => setCurrentPage('my-submissions') : () => setCurrentPage('submissions')} />
             </div>
           </div>
         </div>

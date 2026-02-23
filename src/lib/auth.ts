@@ -18,5 +18,6 @@ export function mapSupabaseUserToAppUser(sbUser: SupabaseUser): User {
     name: fullName,
     email: sbUser.email ?? '',
     initials,
+    role: 'user',
   };
 }

@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Search, Calendar } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Eye } from 'lucide-react';
 import { User } from '../../types/user';
+import { supabase } from '../../lib/supabase';
 
 interface MySubmissionsProps {
   onNavigateBack: () => void;
@@ -11,39 +12,50 @@ interface MySubmissionsProps {
 
 interface Submission {
   id: string;
-  submissionId: string;
-  author: string;
+  submission_number: string | null;
+  submitter_name: string | null;
   title: string;
-  submissionDate: string;
-  status: 'In Progress' | 'Under Review' | 'Accepted' | 'Rejected' | 'Published';
-  userId: string;
 }
-
-// Mock submissions - filtered by user
-const getMockSubmissions = (userId: string): Submission[] => {
-  return [
-    {
-      id: '1',
-      submissionId: '#21',
-      author: 'Li Chunling',
-      title: 'Research on Overall Risk Early Warning Model of The X Rural Commercial Bank Based on Deep Learning',
-      submissionDate: '27/08/2025',
-      status: 'In Progress',
-      userId: '1', // Matches dummy user
-    },
-  ].filter((sub) => sub.userId === userId);
-};
 
 export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewSubmission, user }: MySubmissionsProps) {
   const [activeTab, setActiveTab] = useState<'my-queue' | 'archived'>('my-queue');
   const [searchQuery, setSearchQuery] = useState('');
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const submissions = activeTab === 'my-queue' && user ? getMockSubmissions(user.id) : [];
+  useEffect(() => {
+    if (!user?.id || activeTab !== 'my-queue') {
+      setSubmissions([]);
+      setLoading(false);
+      return;
+    }
+    (async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('submission_details')
+        .select('id, submission_number, submitter_name, title')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      if (error) {
+        setSubmissions([]);
+        setLoading(false);
+        return;
+      }
+      setSubmissions((data || []).map((row) => ({
+        id: row.id,
+        submission_number: row.submission_number ?? null,
+        submitter_name: row.submitter_name ?? null,
+        title: row.title,
+      })));
+      setLoading(false);
+    })();
+  }, [user?.id, activeTab]);
+
   const filteredSubmissions = submissions.filter(
     (sub) =>
       sub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sub.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sub.submissionId.toLowerCase().includes(searchQuery.toLowerCase())
+      (sub.submitter_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (sub.submission_number || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -107,42 +119,35 @@ export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewS
           </button>
         </div>
 
-        {/* My Assigned Section */}
+        {/* My submissions list */}
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4">My Assigned</h3>
 
-          {filteredSubmissions.length > 0 ? (
-            <div className="space-y-4">
+          {loading ? (
+            <div className="text-center py-12 text-gray-500">
+              <p>Loading submissions…</p>
+            </div>
+          ) : filteredSubmissions.length > 0 ? (
+            <div className="divide-y divide-gray-200">
               {filteredSubmissions.map((submission) => (
                 <div
                   key={submission.id}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  className="py-4 first:pt-0 last:pb-0 flex items-start justify-between gap-4"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-medium text-gray-700">
-                          {submission.submissionId} {submission.author}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-semibold text-gray-800 mb-2">{submission.title}</h4>
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Calendar size={16} />
-                        <span>Submitted {submission.submissionDate}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 ml-4">
-                      <span className="px-4 py-1.5 border border-gray-300 rounded-full text-sm text-gray-700 bg-white">
-                        {submission.status}
-                      </span>
-                      <button
-                        onClick={() => onViewSubmission(submission.id)}
-                        className="px-4 py-1.5 bg-gray-800 text-white rounded hover:bg-gray-900 transition-colors text-sm font-medium"
-                      >
-                        View
-                      </button>
-                    </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-gray-500 mb-1">
+                      {submission.submission_number || '—'} / {submission.submitter_name || '—'}
+                    </p>
+                    <h4 className="text-lg font-semibold text-gray-700">{submission.title}</h4>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => onViewSubmission(submission.id)}
+                    className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 text-white rounded text-xs font-medium hover:bg-gray-900 transition-colors"
+                  >
+                    <Eye size={14} />
+                    View
+                  </button>
                 </div>
               ))}
             </div>
