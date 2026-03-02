@@ -23,6 +23,18 @@ export default function OpenAccessPolicy({ onNavigateHome }: OpenAccessPolicyPro
       <div className="space-y-6 text-gray-700 leading-relaxed">
         <section>
           <p className="mb-4">
+            Croatian Medical Journal is committed to promoting the wide dissemination of high-quality scientific research in clinical medicine, biomedical sciences, and healthcare. In response to the evolving dynamics of scholarly communication and the growing global demand for unrestricted access to research findings, the journal has transitioned from a traditional subscription-based publishing model to a fully Open Access (OA) format.
+          </p>
+          <p className="mb-4">
+            This strategic development underscores the journal&apos;s dedication to advancing equitable access to scientific knowledge and supporting the global exchange of research. By adopting a full Open Access model, the Croatian Medical Journal ensures that all published content is immediately and freely accessible to readers worldwide, without financial, legal, or technical barriers. This approach significantly benefits researchers, healthcare professionals, policymakers, and academic institutions—particularly those in low- and middle-income regions—who may otherwise face limitations in accessing subscription-based resources.
+          </p>
+          <p className="mb-4">
+            Under the Open Access policy, all articles are published under the terms of the Creative Commons Attribution 4.0 International (CC BY 4.0) license. This license permits unrestricted use, distribution, reproduction, and adaptation of the work in any medium, including for commercial purposes, provided appropriate credit is given to the original authors and source. The CC BY 4.0 license represents one of the most flexible and widely recognized open-access licensing frameworks, facilitating maximum visibility, dissemination, and scholarly impact of published research.
+          </p>
+        </section>
+
+        <section>
+          <p className="mb-4">
             By enabling free access and liberal reusability, the journal seeks to:
           </p>
           <ul className="list-disc pl-6 space-y-2 mb-6">

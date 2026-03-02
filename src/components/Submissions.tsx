@@ -70,25 +70,69 @@ export default function Submissions({ onNavigateHome, onNavigateLogin, onNavigat
             Author Guidelines
           </h3>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Authors are invited to make a submission to this journal. All submissions will be assessed by an editor
-            to determine whether they meet the aims and scope of this journal. Those considered to be a good fit will
-            be sent for peer review before determining whether they will be accepted or rejected.
+            We welcome high-quality submissions that align with the aims and scope of the journal. All manuscripts
+            undergo an initial editorial evaluation to assess their suitability, originality, and adherence to journal
+            standards. Submissions deemed appropriate will proceed to a rigorous peer-review process. Final decisions
+            regarding acceptance or rejection are made based on reviewers&apos; recommendations and editorial judgment.
           </p>
-          <p className="text-gray-700 leading-relaxed">
-            Before making a submission, authors are responsible for obtaining permission to publish any material
-            included with the submission, such as photos, documents and datasets. All authors identified on the
-            submission must consent to be identified as an author. Where appropriate, research should be approved
-            by an appropriate ethics committee in accordance with the legal requirements of the study's country.
-          </p>
-        </section>
 
-        <section>
+          <h4 className="text-lg font-semibold text-gray-800 mb-2">
+            Submission Requirements
+          </h4>
+          <p className="text-gray-700 leading-relaxed mb-2">
+            Prior to submission, authors must ensure the following:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+            <li>
+              <span className="font-semibold">Scope and Relevance:</span> The manuscript clearly aligns with the
+              journal&apos;s thematic focus and academic standards.
+            </li>
+            <li>
+              <span className="font-semibold">Originality:</span> The work is original, has not been published elsewhere,
+              and is not under consideration by another journal.
+            </li>
+            <li>
+              <span className="font-semibold">Authorship Consent:</span> All listed authors have made significant
+              contributions to the work and have approved the final version of the manuscript.
+            </li>
+            <li>
+              <span className="font-semibold">Permissions:</span> Written permission has been obtained for the use of any
+              copyrighted materials, including photographs, figures, tables, documents, or datasets.
+            </li>
+            <li>
+              <span className="font-semibold">Ethical Approval:</span> Where applicable, research involving human
+              participants, animals, or sensitive data has received approval from an appropriate ethics committee in
+              accordance with national and institutional regulations.
+            </li>
+          </ul>
+
+          <h4 className="text-lg font-semibold text-gray-800 mb-2">
+            Editorial Screening
+          </h4>
+          <p className="text-gray-700 leading-relaxed mb-2">
+            All submissions are subject to preliminary editorial screening. Manuscripts that fail to meet minimum
+            quality standards, lack scientific rigor, fall outside the journal&apos;s scope, or do not comply with
+            formatting requirements may be desk rejected without external peer review.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            To improve the likelihood of progressing to peer review, authors are advised to ensure:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+            <li>The study design is methodologically sound and clearly described.</li>
+            <li>The research objectives and arguments are logically structured and well-articulated.</li>
+            <li>The title is concise, precise, and informative.</li>
+            <li>The abstract is comprehensive and capable of standing independently.</li>
+            <li>The manuscript is written in clear, professional academic language.</li>
+          </ul>
+
+          <h4 className="text-lg font-semibold text-gray-800 mb-2">
+            Preparing Your Submission
+          </h4>
           <p className="text-gray-700 leading-relaxed">
-            An editor may desk reject a submission if it does not meet minimum standards of quality. Before
-            submitting, please ensure that the study design and research argument are structured and articulated
-            properly. The title should be concise and the abstract should be able to stand on its own. This will
-            increase the likelihood of reviewers agreeing to review the paper. When you're satisfied that your
-            submission meets this standard, please follow the checklist below to prepare your submission.
+            Once you are confident that your manuscript meets the above standards, please carefully follow the
+            journal&apos;s submission checklist and formatting instructions prior to uploading your manuscript through
+            the online submission system. Adherence to these guidelines will facilitate a smooth review process and
+            enhance the overall quality and impact of your submission.
           </p>
         </section>
       </div>

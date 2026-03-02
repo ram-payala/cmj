@@ -22,6 +22,29 @@ export default function TermsConditions({ onNavigateHome }: TermsConditionsProps
 
       <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Introduction</h3>
+          <p className="mb-4">
+            Croatian Medical Journal (hereinafter referred to as &quot;the Journal&quot; or &quot;the Website&quot;) is an open access, peer-reviewed scientific publication dedicated to advancing clinical medicine and biomedical sciences.
+          </p>
+          <p className="mb-4">
+            These Terms and Conditions govern access to and use of the Journal&apos;s official website. By accessing, browsing, submitting manuscripts, or otherwise using the Website and its services, users confirm that they have read, understood, and agreed to comply with these Terms. If you do not accept these Terms and Conditions, you should discontinue use of the Website immediately.
+          </p>
+          <p>
+            The Website functions as the Journal&apos;s official digital platform, providing open access to published articles, supplementary files, editorial communications, and other academic resources. These Terms apply to all activities conducted through the Website, including manuscript submission, editorial correspondence, peer review participation, and access to published content.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Use of Website and Content</h3>
+          <p className="mb-4">
+            The Website is intended to support the dissemination of scholarly research in medicine, healthcare, and related disciplines. Users are permitted to read, download, and print published materials for personal, academic, or educational purposes, provided that all copyright notices, author attributions, and citation information are preserved.
+          </p>
+          <p>
+            Reproduction, alteration, redistribution, or commercial exploitation of Website content is strictly prohibited unless expressly authorized by the Publisher or permitted under the applicable open access license governing the specific work. Users must not engage in activities that may compromise the security, integrity, or functionality of the Website. This includes, but is not limited to, attempts to damage, disable, overload, disrupt, or gain unauthorized access to the Website&apos;s systems, user accounts, servers, or stored information.
+          </p>
+        </section>
+
+        <section>
           <h3 className="text-xl font-bold text-gray-800 mb-3">Intellectual Property and Copyright</h3>
           <p className="mb-4">
             Unless otherwise indicated, all intellectual property rights in the Website, including its design, layout, logo, editorial structure, and digital architecture, are owned by Croatian Medical Journal or its licensors. The contents of published articles are protected by copyright and may be licensed under Creative Commons or similar open access agreements. Authors retain rights in accordance with the Journal&apos;s copyright and licensing policy, which will be specified on each published article.

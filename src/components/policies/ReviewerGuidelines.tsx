@@ -20,6 +20,38 @@ export default function ReviewerGuidelines({ onNavigateHome }: ReviewerGuideline
 
       <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Review Policy</h3>
+          <p className="mb-4">
+            Croatian Medical Journal is a peer-reviewed international journal that follows a strict double-blind peer review process. The identities of both authors and reviewers are kept confidential to ensure an impartial, fair, and unbiased evaluation of all submitted manuscripts.
+          </p>
+          <p className="mb-4">
+            Reviewers play a critical role in maintaining the scientific quality, integrity, and credibility of the journal. We sincerely appreciate your expertise and time dedicated to the review process.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Guidance for Reviewers</h3>
+          <p className="mb-2">When assessing a manuscript, reviewers are kindly requested to consider the following:</p>
+          <ol className="list-decimal pl-6 space-y-2 mb-4">
+            <li>
+              <span className="font-semibold">Adherence to Journal Requirements:</span> Evaluate whether the manuscript complies with the journal&apos;s submission guidelines, including scope, structure, formatting, length, and overall presentation standards.
+            </li>
+            <li>
+              <span className="font-semibold">Scientific Quality and Rigor:</span> Assess the originality, methodological soundness, clarity of research objectives, validity of results, and relevance to clinical practice or medical science. Determine whether conclusions are supported by sufficient evidence.
+            </li>
+            <li>
+              <span className="font-semibold">Completion of the Review Form:</span> Please respond carefully and comprehensively to all questions in the reviewer evaluation form. Your detailed comments assist both the editorial team in decision-making and the authors in improving their work.
+            </li>
+            <li>
+              <span className="font-semibold">Constructive and Balanced Feedback:</span> Provide objective, respectful, and constructive comments. Differences in interpretation or perspective are acceptable when supported by evidence. Reviewers are encouraged to offer specific suggestions that can strengthen the manuscript.
+            </li>
+            <li>
+              <span className="font-semibold">Justification for Recommendation:</span> If recommending rejection, please provide clear, detailed, and well-reasoned explanations. Thorough and thoughtful feedback—whether recommending acceptance, revision, or rejection—is highly valued and contributes to the integrity of the peer-review process.
+            </li>
+          </ol>
+        </section>
+
+        <section>
           <h3 className="text-xl font-bold text-gray-800 mb-3">Review Form Evaluation Criteria</h3>
           <p className="mb-4">Please assess the manuscript based on the following questions:</p>
           <ol className="list-decimal pl-6 space-y-2">

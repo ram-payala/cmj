@@ -22,6 +22,36 @@ export default function Accessibility({ onNavigateHome }: AccessibilityProps) {
 
       <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
+          <p className="mb-4">
+            Croatian Medical Journal is dedicated to ensuring that its website and published materials are accessible to all users, including individuals with disabilities. We are committed to fostering an inclusive digital environment that promotes equal and unrestricted access to scholarly information.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Our Commitment</h3>
+          <p className="mb-4">
+            The Journal continuously works to enhance the accessibility and usability of its online platform in accordance with recognized international standards, including the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA.
+          </p>
+          <p>
+            Our objective is to ensure that all published content, editorial resources, and online services are accessible to the broadest possible audience, regardless of physical ability, technological limitations, or geographic location.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Accessibility Features</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Responsive design, ensuring compatibility across desktops, tablets, and mobile devices.</li>
+            <li>Structured headings and semantic HTML markup to support screen readers and other assistive technologies.</li>
+            <li>Alternative text (alt text) for images, figures, and graphical elements where applicable.</li>
+            <li>Keyboard navigation functionality to accommodate users who are unable to use a mouse.</li>
+            <li>Clear typography, adequate color contrast, and scalable text options to enhance readability for users with visual impairments.</li>
+            <li>
+              The Croatian Medical Journal remains committed to ongoing evaluation and improvement of its accessibility practices to ensure equitable access to medical knowledge for all users.
+            </li>
+          </ul>
+        </section>
+
+        <section>
           <h3 className="text-xl font-bold text-gray-800 mb-3">Published Content</h3>
           <p>
             Articles published in Croatian Medical Journal are available in accessible PDF formats where feasible. We encourage authors to submit manuscripts that comply with accessibility standards, including the use of clear structure, descriptive figure legends, and accessible tables. Efforts are ongoing to enhance the accessibility of both current and archived content.

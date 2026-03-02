@@ -31,6 +31,73 @@ export default function AuthorGuidelines({ onNavigateHome }: AuthorGuidelinesPro
 
       <div className="space-y-10 text-gray-700 leading-relaxed">
         <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Purpose and Scope</h3>
+          <p className="mb-4">
+            <strong>Croatian Medical Journal</strong> is an international, peer-reviewed medical journal committed to
+            publishing high-quality original research that advances medical science and clinical practice. The journal
+            seeks to promote the dissemination of significant medical findings to a global readership of clinicians,
+            researchers, and healthcare professionals.
+          </p>
+          <p>
+            The journal is published quarterly in English and maintains rigorous editorial and ethical standards to
+            ensure scientific integrity and academic excellence.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-xl font-bold text-gray-800 mb-3">Manuscript Submission</h3>
+
+          <h4 className="text-lg font-semibold text-gray-800 mb-2">Language and Reporting Standards</h4>
+          <p className="mb-4">
+            All manuscripts must be prepared in English and adhere to the{' '}
+            <em>
+              Recommendations for the Conduct, Reporting, Editing, and Publication of Scholarly Work in Medical Journals
+            </em>{' '}
+            issued by the International Committee of Medical Journal Editors (ICMJE). Authors are expected to ensure
+            that their submissions comply with internationally accepted guidelines for ethical conduct, transparency,
+            and scientific reporting. Detailed guidance is available at the official ICMJE website:{' '}
+            <a
+              href="http://www.icmje.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#4195A3] hover:underline"
+            >
+              http://www.icmje.org
+            </a>
+            .
+          </p>
+
+          <h4 className="text-lg font-semibold text-gray-800 mb-2">Methods of Submission</h4>
+          <p className="mb-2">Authors may submit their manuscripts using one of the following methods:</p>
+          <ol className="list-decimal pl-6 space-y-2">
+            <li>
+              <span className="font-semibold">Submission via Email:</span> Manuscripts may be submitted by email to:{' '}
+              <a
+                href="mailto:manuscripts@croatianmedicaljournal.com"
+                className="text-[#4195A3] hover:underline"
+              >
+                manuscripts@croatianmedicaljournal.com
+              </a>
+              .
+            </li>
+            <li>
+              <span className="font-semibold">Online Submission System:</span> Authors are encouraged to submit
+              manuscripts through the journal&apos;s online submission platform:{' '}
+              <a
+                href="https://www.croatianmedicaljournal.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#4195A3] hover:underline"
+              >
+                https://www.croatianmedicaljournal.com/
+              </a>
+              . The electronic submission system facilitates efficient manuscript tracking and communication throughout
+              the review process.
+            </li>
+          </ol>
+        </section>
+
+        <section>
           <h3 className="text-xl font-bold text-gray-800 mb-3">MANUSCRIPT FORMAT</h3>
           <p className="mb-4">
             The manuscript should be prepared using Microsoft Word, formatted on A4 paper with 25 mm margins. Use double spacing and number pages consecutively starting from the title page.
