@@ -23,10 +23,10 @@ export default function PublishingEthics({ onNavigateHome }: PublishingEthicsPro
       <div className="space-y-8 text-gray-700 leading-relaxed">
         <section>
           <h3 className="text-xl font-bold text-gray-800 mb-3">
-            Acta Clinica Croatica
+            Croatian Medical Journal
           </h3>
           <p className="mb-4">
-            <em>Acta Clinica Croatica</em> is dedicated to maintaining the highest ethical standards in scholarly
+            <em>Croatian Medical Journal</em> is dedicated to maintaining the highest ethical standards in scholarly
             publishing. As a peer-reviewed open-access journal in the field of clinical medical sciences,
             biomedicine, and healthcare, we expect all parties involved in the publication process—authors,
             reviewers, editors, and the publisher—to adhere to internationally accepted standards of ethical

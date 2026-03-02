@@ -71,7 +71,7 @@ export default function Sidebar({ onNavigateSubmit, onNavigateInfoReaders, onNav
           <div className="pt-2">
             <p className="font-semibold text-gray-800">INDEXING</p>
           </div>
-          <p className="text-gray-600 mb-2">Acta Clinica is indexed/included in:</p>
+          <p className="text-gray-600 mb-2">Croatian Medical Journal is indexed/included in:</p>
           <div className="space-y-1">
             <p>MEDLINE</p>
             <p >PubMed Central</p>

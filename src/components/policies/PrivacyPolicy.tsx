@@ -26,7 +26,7 @@ export default function PrivacyPolicy({ onNavigateHome }: PrivacyPolicyProps) {
             Introduction
           </h3>
           <p className="text-gray-700 leading-relaxed mb-4">
-            <em>Acta Clinica Croatica</em> is committed to managing personal data with the utmost integrity,
+            <em>Croatia Medical Journal</em> is committed to managing personal data with the utmost integrity,
             professionalism, and in compliance with applicable data protection laws and standards.
           </p>
           <p className="text-gray-700 leading-relaxed">
