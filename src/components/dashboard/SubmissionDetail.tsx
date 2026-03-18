@@ -137,14 +137,28 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
       : '—';
 
   const handleDownloadFile = async (filePath: string, fileName: string) => {
-    const { data, error } = await supabase.storage.from('submission-files').createSignedUrl(filePath, 60);
-    if (error) return;
+    const { data, error } = await supabase.storage.from('submission-files').download(filePath);
+    if (error || !data) {
+      console.error('Download failed:', error);
+      alert(`Could not download file: ${error?.message ?? 'Unknown error'}`);
+      return;
+    }
+    const url = URL.createObjectURL(data);
     const a = document.createElement('a');
-    a.href = data.signedUrl;
+    a.href = url;
     a.download = fileName;
     a.rel = 'noopener noreferrer';
-    a.target = '_blank';
     a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadAll = async () => {
+    if (filesDeduped.length === 0) return;
+    for (const f of filesDeduped) {
+      // sequential downloads are more reliable across browsers
+      // eslint-disable-next-line no-await-in-loop
+      await handleDownloadFile(f.file_path, f.original_name || f.file_name);
+    }
   };
 
   const isAdmin = user?.role === 'admin';
@@ -355,6 +369,7 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
               <button
                 type="button"
                 disabled={filesDeduped.length === 0}
+                onClick={handleDownloadAll}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Download size={16} />
