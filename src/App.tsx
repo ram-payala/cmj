@@ -125,7 +125,7 @@ function App() {
               ) : currentPage === 'submission-detail' ? (
                 <SubmissionDetail
                   submissionId={selectedSubmissionId}
-                  onNavigateBack={() => setCurrentPage('my-submissions')}
+                  onNavigateBack={() => setCurrentPage(user?.role === 'admin' ? 'admin' : 'my-submissions')}
                   onNavigateToGuidelines={() => setCurrentPage('author-guidelines')}
                   user={user}
                 />

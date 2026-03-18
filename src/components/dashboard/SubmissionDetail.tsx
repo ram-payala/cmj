@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Download, User, FileText, ArrowLeft, Check, ChevronDown } from 'lucide-react';
+import { Download, User, FileText, ArrowLeft, Check, ChevronDown, Calendar } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import type { User as AppUser } from '../../types/user';
 
@@ -131,6 +131,10 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
     (f) => (f.stage || 'submission') === viewingStage
   );
   const articleTypeLabel = ARTICLE_TYPE_LABELS[submission.article_type] || submission.article_type || '—';
+  const submittedDate =
+    submission.submitted_at && !Number.isNaN(new Date(submission.submitted_at).getTime())
+      ? new Date(submission.submitted_at).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' })
+      : '—';
 
   const handleDownloadFile = async (filePath: string, fileName: string) => {
     const { data, error } = await supabase.storage.from('submission-files').createSignedUrl(filePath, 60);
@@ -334,6 +338,12 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
                 <FileText size={18} className="text-gray-400 flex-shrink-0" />
                 <span className="text-sm text-gray-700">
                   <span className="font-medium">Type:</span> {articleTypeLabel}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Calendar size={18} className="text-gray-400 flex-shrink-0" />
+                <span className="text-sm text-gray-700">
+                  <span className="font-medium">Submitted:</span> {submittedDate}
                 </span>
               </div>
             </div>

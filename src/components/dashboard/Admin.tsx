@@ -13,6 +13,7 @@ interface SubmissionRow {
   submission_number: string | null;
   submitter_name: string | null;
   title: string;
+  submitted_at: string | null;
 }
 
 export default function Admin({ onNavigateBack, onViewSubmission, onNewSubmission }: AdminProps) {
@@ -23,7 +24,7 @@ export default function Admin({ onNavigateBack, onViewSubmission, onNewSubmissio
     (async () => {
       const { data, error } = await supabase
         .from('submission_details')
-        .select('id, submission_number, submitter_name, title')
+        .select('id, submission_number, submitter_name, title, submitted_at')
         .order('created_at', { ascending: false });
       if (error) {
         setSubmissions([]);
@@ -33,11 +34,19 @@ export default function Admin({ onNavigateBack, onViewSubmission, onNewSubmissio
           submission_number: r.submission_number ?? null,
           submitter_name: r.submitter_name ?? null,
           title: r.title,
+          submitted_at: r.submitted_at ?? null,
         })));
       }
       setLoading(false);
     })();
   }, []);
+
+  const formatSubmittedDate = (value: string | null) => {
+    if (!value) return '—';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' });
+  };
 
   return (
     <div>
@@ -75,6 +84,9 @@ export default function Admin({ onNavigateBack, onViewSubmission, onNewSubmissio
                     {sub.submission_number || '—'} / {sub.submitter_name || '—'}
                   </p>
                   <h4 className="text-lg font-semibold text-gray-700">{sub.title}</h4>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Submitted: {formatSubmittedDate(sub.submitted_at)}
+                  </p>
                 </div>
                 <button
                   type="button"

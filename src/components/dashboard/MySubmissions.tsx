@@ -15,6 +15,7 @@ interface Submission {
   submission_number: string | null;
   submitter_name: string | null;
   title: string;
+  submitted_at: string | null;
 }
 
 export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewSubmission, user }: MySubmissionsProps) {
@@ -33,7 +34,7 @@ export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewS
       setLoading(true);
       const { data, error } = await supabase
         .from('submission_details')
-        .select('id, submission_number, submitter_name, title')
+        .select('id, submission_number, submitter_name, title, submitted_at')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
       if (error) {
@@ -46,10 +47,18 @@ export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewS
         submission_number: row.submission_number ?? null,
         submitter_name: row.submitter_name ?? null,
         title: row.title,
+        submitted_at: row.submitted_at ?? null,
       })));
       setLoading(false);
     })();
   }, [user?.id, activeTab]);
+
+  const formatSubmittedDate = (value: string | null) => {
+    if (!value) return '—';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' });
+  };
 
   const filteredSubmissions = submissions.filter(
     (sub) =>
@@ -139,6 +148,9 @@ export default function MySubmissions({ onNavigateBack, onViewSubmission, onNewS
                       {submission.submission_number || '—'} / {submission.submitter_name || '—'}
                     </p>
                     <h4 className="text-lg font-semibold text-gray-700">{submission.title}</h4>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Submitted: {formatSubmittedDate(submission.submitted_at)}
+                    </p>
                   </div>
                   <button
                     type="button"
