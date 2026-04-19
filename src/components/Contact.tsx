@@ -22,18 +22,18 @@ export default function Contact({ onNavigateHome }: ContactProps) {
         <p>For any inquiries, please reach out to us at the following email addresses:</p>
         <div className="space-y-3">
           <a
-            href="mailto:editor@croatianmedicaljournal.com"
+            href="mailto:editor@croatianmedicaljournal.org"
             className="flex items-center gap-2 text-[#4195A3] hover:underline"
           >
             <Mail size={18} />
-            <span>Editorial Inquiries: editor@croatianmedicaljournal.com</span>
+            <span>Editorial Inquiries: editor@croatianmedicaljournal.org</span>
           </a>
           <a
-            href="mailto:manuscripts@croatianmedicaljournal.com"
+            href="mailto:publish@croatianmedicaljournal.org"
             className="flex items-center gap-2 text-[#4195A3] hover:underline"
           >
             <Mail size={18} />
-            <span>General Inquiries: manuscripts@croatianmedicaljournal.com</span>
+            <span>General Inquiries: publish@croatianmedicaljournal.org</span>
           </a>
         </div>
       </div>

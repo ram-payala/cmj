@@ -130,6 +130,29 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
   const filesInStage = filesDeduped.filter(
     (f) => (f.stage || 'submission') === viewingStage
   );
+
+  const stageIndexOf = (stageId: string) => {
+    const i = statusOrder.indexOf(stageId);
+    return i >= 0 ? i : 0;
+  };
+  const viewingStageIndex = stageIndexOf(viewingStage);
+  /** Rightmost stage that still has at least one file — drives “completed vs not initiated” for empty tabs. */
+  let maxFileStageIndex = -1;
+  for (const f of filesDeduped) {
+    maxFileStageIndex = Math.max(maxFileStageIndex, stageIndexOf(f.stage || 'submission'));
+  }
+  const effectiveProgressIndex =
+    maxFileStageIndex >= 0 ? maxFileStageIndex : currentStageIndex;
+
+  const emptyStageMessage =
+    filesInStage.length === 0
+      ? viewingStageIndex > effectiveProgressIndex
+        ? 'Stage not initiated'
+        : viewingStageIndex < effectiveProgressIndex
+          ? 'Stage completed'
+          : 'No files in this stage.'
+      : '';
+
   const articleTypeLabel = ARTICLE_TYPE_LABELS[submission.article_type] || submission.article_type || '—';
   const submittedDate =
     submission.submitted_at && !Number.isNaN(new Date(submission.submitted_at).getTime())
@@ -260,9 +283,7 @@ export default function SubmissionDetail({ submissionId, onNavigateBack, onNavig
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Submission Files</h3>
           {filesInStage.length === 0 ? (
-            <div className="text-center py-8 text-gray-500 text-sm">
-              No files in this stage.
-            </div>
+            <div className="text-center py-8 text-gray-500 text-sm">{emptyStageMessage}</div>
           ) : (
             <>
               {isAdmin && (
