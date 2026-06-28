@@ -1,6 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
+// Added 'browse' to the valid navigation page targets type structure
 interface NavigationProps {
   currentPage: string;
   onNavigate: (page: 'home' | 'about' | 'browse' | 'submissions' | 'author-guidelines' | 'open-access' | 'publishing-ethics' | 'reviewer-guidelines' | 'privacy-policy' | 'copyright-licensing' | 'terms-conditions' | 'accessibility' | 'contact') => void;
@@ -18,7 +19,8 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
         { label: 'ABOUT THE JOURNAL', page: 'about' as const },
       ],
     },
-    { label: 'BROWSE CONTENT', hasDropdown: false, page: null, submenu: [] },
+    // ✅ CHANGED: Connected page to 'browse' to handle the navigation actions
+    { label: 'BROWSE CONTENT', hasDropdown: false, page: 'browse' as const, submenu: [] },
     { label: 'SUBMISSIONS', hasDropdown: false, page: 'submissions' as const, submenu: [] },
     {
       label: 'AUTHOR GUIDELINES',
@@ -56,6 +58,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <button
+                type="button"
                 onClick={() => item.page && onNavigate(item.page)}
                 className={`flex items-center gap-1 hover:text-[#4195A3] transition-colors font-medium text-sm ${
                   item.submenu?.some((sub) => sub.page === currentPage || (currentPage === 'home' && sub.page === 'about')) || item.page === currentPage
