@@ -70,19 +70,30 @@ function App() {
     setCurrentPage('home');
   };
 
-  const mockArticles = [
+ const mockArticles = [
     {
       id: '1',
-      title: 'CASE REPORT AND LITERATURE REVIEW ON PURULENT MENINGITIS WITH SPINAL HEMORRHAGE',
-      authors: 'Hong Zhang, Shu-ji Gao, Xiao-yu Yang, Ming-wei Liu (Author)',
-      pages: '428-434',
-    },
-    {
-      id: '2',
-      title: 'PANCREATIC DUCT-SUPPORTED LONGITUDINAL "U"-SHAPED PANCREATICOJEJUNOSTOMY IN LAPAROSCOPIC PANCREATICODUODENECTOMY: EVALUATION OF SAFETY AND FEASIBILITY',
-      authors: 'Weihua Zheng, Yu Zhang, Zihang Wang, Junjie Lu, Long Xia, Caiyan An, Junjing Zhang (Author)',
-      pages: '435-444',
-    },
+      title: 'Clinical Characteristics and APC Gene Mutation Spectrum of Familial Adenomatous Polyposis Patients in China',
+      /* ✅ Individual author blocks pairing names and their corresponding institutions */
+      authorsList: [
+        { name: 'Jiaqi Kang', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' },
+        { name: 'Mingsen Li', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' },
+        { name: 'Chen Xu', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' },
+        { name: 'Yuwei Li', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' },
+        { name: 'Zhao Zhang', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' }
+      ],
+      authors: 'Jiaqi Kang, Mingsen Li, Chen Xu, Yuwei Li, Zhao Zhang*',
+      pdfUrl: '/src/public/pdfs/Final Publication Proof - CMJ26-R591.pdf',
+      pages: '135-142',
+      abstract: `Objective: Given the limited clinical and molecular characterization of familial adenomatous polyposis (FAP) in Chinese populations, we delineate the APC mutational landscape in national probands and correlates genotypic profiles with phenotypic manifestations.
+
+Methods: Comprehensive APC gene sequencing was conducted in 33 unrelated Chinese polyposis patients, with subsequent genotype-phenotype correlation analysis leveraging clinical data from index cases and affected relatives.
+
+Findings: Germline APC mutations were identified in 28/33 (84.8%) probands. Patients with profuse FAP developed polyposis and cancer significantly earlier than attenuated or intermediate subtypes. 13 out of 35 mutations (46.4%) were localized within exon 15. Codon 1309 has the highest mutation frequency (7%,2/29). 7 novel APC mutations were identified, including c.646-1>T, c.1285delC, c.1350_1352delinsAC, c.3992_3993insA, c.230_233delTAGA, EX5_16DEL, Ex3_16DEL. Most intermediate FAP cases (92.9%, 13/14) had disease-causing mutations in codons 157-1595, matching the known mutation hotspot region. 100% (4/4) of congenital hypertrophy of retinal pigment epithelium, 75% (3/4) of gastroduodenal adenomas, and 50% (1/2) of desmoid tumor cases were localized to established APC risk domains.
+
+Conclusions: Our comprehensive profiling of APC variants in Chinese polyposis patients delineated clinical characteristics and novel pathogenic mutations. We observed divergent genotype-phenotype correlations in part of mutation-positive families, necessitating tailored genetic counseling and management strategies for this population.`,
+      keywords: 'familial adenomatous polyposis, APC, mutation screening, genotype-phenotype.'
+    }
   ];
 
   // Render dashboard pages separately (they have their own layout)
@@ -168,10 +179,10 @@ function App() {
                 ) : currentPage === 'browse' ? (
                   <BrowseContent
                     onNavigateHome={() => setCurrentPage('home')}
-                    volume={64}
-                    issue={4}
-                    year={2025}
-                    publishedDate="2025-12-29"
+                    volume={67}
+                    issue={1}
+                    year={2026}
+                    publishedDate="2026-06-27"
                     articles={mockArticles}
                   />
                 ) : currentPage === 'submissions' ? (
