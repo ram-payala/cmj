@@ -83,7 +83,7 @@ function App() {
         { name: 'Zhao Zhang', affiliation: 'Department of Colorectal Surgery, Tianjin Union Medical Center, The First Affiliated Hospital of Nankai University, China; Tianjin Institute of Coloproctology, China.' }
       ],
       authors: 'Jiaqi Kang, Mingsen Li, Chen Xu, Yuwei Li, Zhao Zhang*',
-      pdfUrl: '/src/public/pdfs/Final Publication Proof - CMJ26-R591.pdf',
+      pdfUrl: '/pdfs/Final Publication Proof - CMJ26-R591.pdf',
       pages: '135-142',
       abstract: `Objective: Given the limited clinical and molecular characterization of familial adenomatous polyposis (FAP) in Chinese populations, we delineate the APC mutational landscape in national probands and correlates genotypic profiles with phenotypic manifestations.
 
