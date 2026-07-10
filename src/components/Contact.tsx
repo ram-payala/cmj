@@ -1,4 +1,4 @@
-import { Home, Mail } from 'lucide-react';
+import { Home, Mail, Building } from 'lucide-react';
 
 interface ContactProps {
   onNavigateHome: () => void;
@@ -33,11 +33,18 @@ export default function Contact({ onNavigateHome }: ContactProps) {
             className="flex items-center gap-2 text-[#4195A3] hover:underline"
           >
             <Mail size={18} />
-            <span>General Inquiries: publish@croatianmedicaljournal.org</span>
+            <span>General Inquiries: publish@medicaljournalcroatia.com</span>
           </a>
+        </div>
+
+        {/* Publisher Information */}
+        <div className="pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-2 text-gray-700">
+            <Building size={18} className="text-[#4195A3]" />
+            <span><strong>Publisher:</strong> Pinnacle Publications</span>
+          </div>
         </div>
       </div>
     </div>
   );
 }
- 
