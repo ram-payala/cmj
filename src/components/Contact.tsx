@@ -22,7 +22,7 @@ export default function Contact({ onNavigateHome }: ContactProps) {
         <p>For any inquiries, please reach out to us at the following email addresses:</p>
         <div className="space-y-3">
           <a
-            href="mailto:editor@croatianmedicaljournal.org"
+            href="mailto:editor@medicaljournalcroatia.com"
             className="flex items-center gap-2 text-[#4195A3] hover:underline"
           >
             <Mail size={18} />
