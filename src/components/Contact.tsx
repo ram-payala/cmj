@@ -26,7 +26,7 @@ export default function Contact({ onNavigateHome }: ContactProps) {
             className="flex items-center gap-2 text-[#4195A3] hover:underline"
           >
             <Mail size={18} />
-            <span>Editorial Inquiries: editor@croatianmedicaljournal.org</span>
+            <span>Editorial Inquiries: editor@medicaljournalcroatia.com</span>
           </a>
           <a
             href="mailto:publish@croatianmedicaljournal.org"
