@@ -40,3 +40,4 @@ export default function Contact({ onNavigateHome }: ContactProps) {
     </div>
   );
 }
+ 
